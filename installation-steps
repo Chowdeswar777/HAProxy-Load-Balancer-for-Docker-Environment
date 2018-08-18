@@ -1,0 +1,30 @@
+Youtube video reference - https://www.youtube.com/watch?v=77wXzh_Kjv0
+
+ mkdir -p /opt/haproxy/
+ cd /opt/haproxy/
+ vi haproxy.cfg
+ docker run -d --name my-running-haproxy -p 80:80 -v /opt/haproxy:/usr/local/etc/haproxy:ro haproxy:1.7
+ ip a | grep eth1
+ 
+ ---------------------------haproxy.cfg------------------------------------------------------
+ global
+        debug
+
+defaults
+        log global
+        mode    http
+        timeout connect 5000
+        timeout client 5000
+        timeout server 5000
+
+frontend main
+        bind *:80
+        default_backend app
+
+backend app
+        balance roundrobin
+        mode http
+        server srv1 192.168.100.48:80
+        server srv2 192.168.100.49:80
+        server srv3 192.168.100.50:80
+----------------------------------------------End----------------------------------
